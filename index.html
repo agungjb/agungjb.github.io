@@ -54,9 +54,31 @@
             border: 2px solid black;
         }
 
+        /* Success Toast Animation */
+        @keyframes slideDown {
+            from { transform: translate(-50%, -100%); opacity: 0; }
+            to { transform: translate(-50%, 20px); opacity: 1; }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        .toast-enter {
+            animation: slideDown 0.4s ease-out forwards;
+        }
+        .toast-exit {
+            animation: fadeOut 0.4s ease-out forwards;
+        }
+
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col items-center pb-32">
+
+    <!-- SUCCESS TOAST NOTIFICATION (Hidden by default) -->
+    <div id="successToast" class="fixed top-0 left-1/2 -translate-x-1/2 z-[70] hidden bg-black text-white px-6 py-3 rounded-full shadow-lg flex items-center gap-2 border border-white/20">
+        <span class="text-lg">✅</span>
+        <span class="text-sm font-medium">Pesan kamu sudah terkirim ke guenk</span>
+    </div>
 
     <!-- CONTAINER UTAMA -->
     <div class="w-full max-w-md px-4 pt-8 relative">
@@ -96,12 +118,16 @@
                     <textarea id="qMessage" placeholder="Pertanyaan..." required rows="2" class="w-full p-2 border border-gray-300 rounded text-sm focus:border-black outline-none"></textarea>
                     
                     <!-- Recapcha Simple -->
-                    <div class="flex items-center gap-2 text-sm p-2 bg-white rounded border border-gray-200">
+                    <div class="relative flex items-center gap-2 text-sm p-2 bg-white rounded border border-gray-200">
                         <span id="captchaQuestion" class="font-bold font-mono"></span>
-                        <input type="number" id="captchaAnswer" placeholder="=" class="w-16 border-b-2 border-black text-center focus:outline-none">
+                        <input type="number" id="captchaAnswer" placeholder="=" class="w-16 border-b-2 border-black text-center focus:outline-none" oninput="hideCaptchaError()">
+                        <!-- Error Message (Hidden by default) -->
+                        <span id="captchaError" class="hidden absolute top-full left-0 mt-1 text-[10px] text-red-600 font-bold bg-red-50 px-2 py-0.5 rounded border border-red-200 w-full animate-pulse">
+                            ⚠️ masukan jumlah yg benar
+                        </span>
                     </div>
 
-                    <button type="submit" class="w-full bg-black text-white font-bold py-3 rounded hover:bg-gray-800">SEND MESSAGE</button>
+                    <button type="submit" class="w-full bg-black text-white font-bold py-3 rounded hover:bg-gray-800 transition">SEND MESSAGE</button>
                 </form>
             </div>
         </div>
@@ -119,7 +145,7 @@
             </div>
         </div>
 
-        <!-- LINK LIST (Revised: Smaller Buttons) -->
+        <!-- LINK LIST (Smaller Buttons) -->
         <div id="link-section" class="grid grid-cols-2 gap-3 mb-10">
             <a href="https://guenk.xyz" class="searchable-item flex flex-row items-center justify-center gap-2 p-3 border-thick rounded-xl hover:bg-black hover:text-white transition group bg-white">
                 <div class="text-xl group-hover:scale-110 transition">👉</div>
@@ -290,14 +316,39 @@
             document.getElementById('marketingPopup').classList.add('hidden');
         }
 
-        // Math Captcha
+        // Math Captcha Logic
         let captchaRes = 0;
         function initCaptcha() {
             let a = Math.floor(Math.random()*10), b = Math.floor(Math.random()*10);
             captchaRes = a + b;
             document.getElementById('captchaQuestion').innerText = `${a} + ${b}`;
+            hideCaptchaError(); // reset error state
         }
         initCaptcha();
+
+        function hideCaptchaError() {
+            document.getElementById('captchaError').classList.add('hidden');
+        }
+
+        function showCaptchaError() {
+            document.getElementById('captchaError').classList.remove('hidden');
+        }
+
+        function showSuccessToast() {
+            const toast = document.getElementById('successToast');
+            toast.classList.remove('hidden');
+            toast.classList.add('toast-enter');
+            
+            // Hide after 3.5 seconds
+            setTimeout(() => {
+                toast.classList.remove('toast-enter');
+                toast.classList.add('toast-exit');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                    toast.classList.remove('toast-exit');
+                }, 400); // match animation duration
+            }, 3500);
+        }
 
         function toggleAccordion() {
             const content = document.getElementById('accordion-content');
@@ -313,8 +364,9 @@
             const em = document.getElementById('lEmail').value;
             const w = document.getElementById('lWhatsapp').value;
 
-            // Submit ke GForm (Hidden)
+            // Form Hidden
             const form = document.createElement('form');
+            form.style.display = 'none'; 
             form.action = GFORM_URL; form.method = 'POST'; form.target = 'hidden_iframe';
             
             const i1 = document.createElement('input'); i1.name='entry.1806687588'; i1.value=n; form.appendChild(i1);
@@ -323,21 +375,49 @@
             
             document.body.appendChild(form); form.submit();
             
-            // GANTI TAMPILAN POPUP (Logic Baru)
+            // UI Change
             document.getElementById('popup-form-state').classList.add('hidden');
             document.getElementById('popup-success-state').classList.remove('hidden');
-
             localStorage.setItem('leadSubmitted', 'true');
+            setTimeout(() => document.body.removeChild(form), 1000);
         }
 
         function submitQuestion(e) {
             e.preventDefault();
+            
+            // VALIDASI CAPTCHA
             if(parseInt(document.getElementById('captchaAnswer').value) !== captchaRes) {
-                alert("Salah hitung!"); return;
+                showCaptchaError();
+                return; // Stop process
             }
-            alert("Pesan terkirim!");
+
+            const n = document.getElementById('qName').value;
+            const em = document.getElementById('qEmail').value;
+            const w = document.getElementById('qWhatsapp').value;
+            const m = document.getElementById('qMessage').value;
+
+            // Form Hidden
+            const form = document.createElement('form');
+            form.style.display = 'none';
+            form.action = GFORM_URL; form.method = 'POST'; form.target = 'hidden_iframe';
+
+            const i1 = document.createElement('input'); i1.name='entry.1806687588'; i1.value=n; form.appendChild(i1);
+            const i2 = document.createElement('input'); i2.name='entry.1806687588'; i2.value=em; form.appendChild(i2);
+            const i3 = document.createElement('input'); i3.name='entry.31252103'; i3.value=w; form.appendChild(i3);
+            const i4 = document.createElement('input'); i4.name='entry.586171816'; i4.value=m; form.appendChild(i4);
+
+            document.body.appendChild(form); form.submit();
+
+            // SUCCESS NOTIFICATION (Toast)
+            showSuccessToast();
+
+            // Reset UI
             document.getElementById('questionForm').reset();
             initCaptcha();
+            setTimeout(() => document.body.removeChild(form), 1000);
+            
+            // Tutup accordion opsional biar bersih
+            // toggleAccordion(); 
         }
     </script>
 </body>
