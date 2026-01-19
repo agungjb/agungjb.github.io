@@ -1,0 +1,938 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>guenk | biolink</title>
+  <meta name="description" content="Ultra-minimal biolink by guenk" />
+  <meta name="theme-color" content="#ffffff" />
+
+  <!-- =========================================================
+  ============ DATA (UTAK-ATIK DI SINI - PALING ATAS) ===========
+  ========================================================== -->
+  <script>
+  window.BIOLINK_CONFIG = {
+    /* 1) GTM ID */
+    GTM_ID: "GTM-WTZLWJSR",
+
+    /* Theme */
+    THEME: {
+      bg: "#ffffff",
+      text: "#0a0a0a",
+      muted: "#5a5a5a",
+      border: "#0a0a0a",
+      card: "#ffffff",
+      buttonBg: "#0a0a0a",
+      buttonText: "#ffffff",
+      buttonBgAlt: "#ffffff",
+      buttonTextAlt: "#0a0a0a",
+      shadow: "0 10px 30px rgba(0,0,0,.08)"
+    },
+
+    /* 3) Profile photo */
+    PROFILE: {
+      avatarUrl: "https://lh3.googleusercontent.com/a/ACg8ocJ7cMujo1yh0vOPsMuB0ZambMHCLUMApaTPaGjCIXMRhSZdt6A=s576-c-no",
+      username: "guenk",            // 4)
+      bio: "halo nice to meet you"  // 5)
+    },
+
+    /* 6) Social media (true/false) */
+    SOCIALS: [
+      { active: true, platform: "tiktok",   label: "TikTok",   url: "https://www.tiktok.com/@guenk.xyz", icon: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" },
+      { active: true, platform: "instagram",label: "Instagram",url: "https://www.instagram.com/guenk.xyz?igsh=N3VuMTNmaTh6dTk3", icon: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" },
+      { active: true, platform: "youtube",  label: "YouTube",  url: "https://www.youtube.com/@Guenkxyz", icon: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" },
+      { active: true, platform: "facebook", label: "Facebook", url: "https://www.facebook.com/share/1Et8fFd7or/", icon: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" },
+      { active: true, platform: "threads",  label: "Threads",  url: "https://www.threads.com/@guenk.xyz", icon: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/threads.svg" },
+      { active: true, platform: "twitter",  label: "X",        url: "https://x.com/Guenk_xyz", icon: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" }
+    ],
+
+    /* 2) Popup marketing + Google Form */
+    POPUP: {
+      enabled: true,
+      showOnFirstVisit: true,
+      firstVisitDelayMs: 900,
+      ctaButtonText: "Gratis",
+      title: "Dapatkan biolink ini secara gratis",
+      subtitle: "Masukkan nama, email, dan WhatsApp. Wajib valid.",
+      thanksText: "Terimakasih, biolink ini akan dikirim ke kamu. Silahkan cek notifikasi WhatsApp atau email.",
+      accentButtonBg: "#0a0a0a",   // warna tombol CTA popup
+      accentButtonText: "#ffffff"
+    },
+
+    /* 7) Any Question dropdown form */
+    ANY_QUESTION: {
+      enabled: true,
+      title: "Any question",
+      ctaText: "Send message",
+      colorButtonBg: "#0a0a0a",
+      colorButtonText: "#ffffff",
+
+      /* Anti-bot:
+         - enableRecaptcha: true => pakai Google reCAPTCHA (BUTUH SITE KEY beneran).
+         - kalau false => pakai checkbox + challenge ringan (no external key).
+      */
+      enableRecaptcha: false,
+      recaptchaSiteKey: "" // isi kalau enableRecaptcha = true
+    },
+
+    /* Google Form config (dipakai untuk popup + any question) */
+    GFORM: {
+      formId: "1FAIpQLSf6r7MhZ-4csP1O5Nqf5Fl25Qlb1TzKaK1zYXPybj1bt4x62Q",
+
+      // Lo minta name & email sama-sama entry.1806687588 (ini biasanya typo).
+      // Gue set default sesuai instruksi lo. Kalau submit email gak kebaca, benerin di sini.
+      entryName: "entry.1806687588",
+      entryEmail: "entry.1806687588",
+      entryWhatsapp: "entry.31252103",
+      entryQuestion: "entry.586171816"
+    },
+
+    /* 8) Link list (true/false) + fallback logic */
+    LINKLIST: [
+      { active: true,  title: "👉guenk.xyz", url: "https://guenk.xyz", icon: "" },
+      { active: true,  title: "🫵Google",    url: "https://google.com", icon: "" },
+      { active: true,  title: "🖕Bio Link",  url: "https://bio.link", icon: "" },
+      { active: true,  title: "👆Canva",     url: "https://canva.com", icon: "" },
+      { active: true,  title: "👇Biolink",   url: "https://biolink.org", icon: "" },
+      { active: true,  title: "🖕Hosteko",   url: "https://hosteko.com", icon: "" }
+    ],
+    // kalau linklist icon kosong, pakai icon fallback ini:
+    LINKLIST_FALLBACK_ICON: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linktree.svg",
+
+    /* 9) Search + back-to-top sticky nav (posisi: sebelum link list, tapi sticky muncul saat scroll) */
+    SEARCH_NAV: {
+      title: "Cari disini",
+      stickyShowAfterPx: 520,
+      backToTopText: "Kembali ke atas"
+    },
+
+    /* 10) Products + categories */
+    CATEGORIES: [
+      { id: "all", label: "All" },
+      { id: "free", label: "Gratis" },
+      { id: "gear", label: "Gear" }
+    ],
+    PRODUCTS: [
+      { active: true, title: "Botol Minuman", url: "https://s.shopee.co.id/AUnrfjNE4U", image: "https://down-id.img.susercontent.com/file/id-11134207-81ztp-mfar4bifbrpo92.webp", price: "Gratis", category: "free" },
+      { active: true, title: "Tripod", url: "https://s.shopee.co.id/3fxXXLmzRO", image: "https://down-id.img.susercontent.com/file/id-11134207-8224s-mj05x727x8g59e@resize_w750_nl.webp", price: "Gratis", category: "free" },
+      { active: true, title: "Extra Jas Hujan", url: "https://s.shopee.co.id/4q9UveEalW", image: "https://down-id.img.susercontent.com/file/id-11134207-81ztl-mfh6eu93i9l5af.webp", price: "75k", category: "gear" },
+      { active: true, title: "Satu Set Pancing – Newtrek Raincoat Omuro Series", url: "https://s.shopee.co.id/70DzVlFYTW", image: "https://down-id.img.susercontent.com/file/id-11134207-7r98q-lx0k6dqu31nu92.webp", price: "50k", category: "gear" },
+      { active: true, title: "Satu Set Pancing", url: "https://s.shopee.co.id/6KyIioy6Ve", image: "https://down-id.img.susercontent.com/file/id-11134207-7r98z-lqm0ms7s0xdy67.webp", price: "15k", category: "gear" }
+    ],
+    buyText: "Buy",
+
+    /* 11) Footer */
+    FOOTER_TEXT: "2026 by Aguenk. All rights reserved."
+  };
+  </script>
+
+  <!-- 1) GTM: container injected using config below -->
+  <script>
+    (function(w,d,s,l,i){
+      w[l]=w[l]||[]; w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
+      var f=d.getElementsByTagName(s)[0], j=d.createElement(s), dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true; j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer',window.BIOLINK_CONFIG.GTM_ID);
+  </script>
+
+  <style>
+    :root{
+      --bg:#fff; --text:#0a0a0a; --muted:#5a5a5a; --border:#0a0a0a;
+      --card:#fff; --btn:#0a0a0a; --btnText:#fff; --btnAlt:#fff; --btnAltText:#0a0a0a;
+      --radius:18px;
+    }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0; background:var(--bg); color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      -webkit-font-smoothing:antialiased;
+    }
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width: 460px; margin: 0 auto; padding: 18px 14px 110px; }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow, none);
+    }
+    .header{
+      padding:14px;
+      display:flex; gap:12px; align-items:center;
+    }
+    .avatar{
+      width:56px; height:56px; border-radius:999px; overflow:hidden;
+      border:1px solid var(--border);
+      flex:0 0 auto;
+    }
+    .avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .nameBlock{ flex:1; min-width:0; }
+    .username{ font-weight:800; letter-spacing:.2px; font-size:16px; line-height:1.1; }
+    .bio{ color:var(--muted); font-size:13px; margin-top:4px; line-height:1.3; }
+
+    .ctaRow{ padding: 0 14px 14px; display:flex; gap:10px; }
+    .btn{
+      width:100%;
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:12px 12px;
+      border-radius: 999px;
+      border:1px solid var(--border);
+      font-weight:800;
+      letter-spacing:.2px;
+      background: var(--btn);
+      color: var(--btnText);
+      cursor:pointer;
+      user-select:none;
+      transition: transform .06s ease;
+    }
+    .btn:active{ transform: scale(.99); }
+    .btn.alt{
+      background: var(--btnAlt);
+      color: var(--btnAltText);
+    }
+
+    .section{ margin-top: 12px; }
+    .sectionTitle{
+      font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+      color: var(--muted);
+      padding: 0 6px 8px;
+    }
+
+    /* Social icons row */
+    .socialRow{
+      display:flex; gap:10px; padding: 12px 14px;
+      justify-content: space-between;
+    }
+    .socialBtn{
+      width:42px; height:42px; border-radius:999px;
+      border:1px solid var(--border);
+      display:grid; place-items:center;
+      background:#fff;
+      cursor:pointer;
+    }
+    .socialBtn img{ width:18px; height:18px; filter: invert(0); }
+    /* make simple-icons black */
+    .iconBW{ filter: invert(0) saturate(0) brightness(0); }
+
+    /* Link list */
+    .linkList{ padding: 12px 14px; display:flex; flex-direction:column; gap:10px; }
+    .linkItem{
+      border:1px solid var(--border);
+      border-radius: 999px;
+      padding: 12px 12px;
+      display:flex; align-items:center; justify-content:center;
+      gap:10px;
+      text-align:center;
+      font-weight:800;
+      background:#fff;
+      cursor:pointer;
+    }
+    .linkItem .liIcon{ width:18px; height:18px; }
+    .centerHint{ color:var(--muted); font-size:13px; padding: 10px 14px 0; text-align:center; }
+
+    /* Dropdown Any Question */
+    details.anyQ{ border:1px solid var(--border); border-radius: var(--radius); overflow:hidden; background:#fff; }
+    details.anyQ summary{
+      list-style:none; cursor:pointer;
+      padding: 14px;
+      font-weight:900;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    details.anyQ summary::-webkit-details-marker{ display:none; }
+    .anyBody{ border-top:1px solid var(--border); padding: 14px; }
+    .grid{ display:grid; gap:10px; }
+    .field{ display:flex; flex-direction:column; gap:6px; }
+    .label{ font-size:12px; color:var(--muted); font-weight:700; letter-spacing:.04em; }
+    input, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius: 12px;
+      border:1px solid var(--border);
+      outline:none;
+      font-size:14px;
+      background:#fff;
+      color:var(--text);
+    }
+    textarea{ min-height: 88px; resize: vertical; }
+    .error{ color:#b00020; font-size:12px; margin-top:6px; }
+    .ok{ color:#0a7a2f; font-size:12px; margin-top:6px; }
+
+    /* Products */
+    .filters{ padding: 12px 14px; display:flex; gap:8px; flex-wrap:wrap; }
+    .chip{
+      border:1px solid var(--border);
+      border-radius:999px;
+      padding: 8px 10px;
+      font-weight:800;
+      font-size:12px;
+      background:#fff;
+      cursor:pointer;
+    }
+    .chip.active{ background: var(--btn); color: var(--btnText); }
+
+    .products{ padding: 12px 14px; display:grid; gap:12px; }
+    .product{
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      overflow:hidden;
+      background:#fff;
+      display:grid;
+      grid-template-columns: 92px 1fr;
+      min-height: 92px;
+    }
+    .pImg{ width:92px; height:92px; background:#f6f6f6; border-right:1px solid var(--border); }
+    .pImg img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .pBody{ padding: 10px 10px; display:flex; flex-direction:column; gap:6px; }
+    .pTitle{ font-weight:900; font-size:13px; line-height:1.25; }
+    .pMeta{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .pPrice{ color:var(--muted); font-weight:800; font-size:12px; }
+    .pBuy{
+      border:1px solid var(--border);
+      border-radius:999px;
+      padding: 8px 10px;
+      font-weight:900;
+      background: var(--btn);
+      color: var(--btnText);
+      cursor:pointer;
+      font-size:12px;
+      white-space:nowrap;
+    }
+
+    /* Search block (normal position) */
+    .searchBlock{ padding: 12px 14px; display:flex; gap:10px; align-items:center; }
+    .searchBlock input{ border-radius:999px; }
+    .topBtn{ border-radius:999px; padding:12px 14px; font-weight:900; }
+
+    /* Sticky nav bottom center */
+    .stickyNav{
+      position:fixed; left:50%; transform: translateX(-50%);
+      bottom: 14px;
+      width: min(460px, calc(100% - 24px));
+      display:none;
+      z-index: 50;
+    }
+    .stickyInner{
+      display:flex; gap:10px; align-items:center;
+      padding: 10px;
+      border-radius: 999px;
+      border:1px solid var(--border);
+      background:#fff;
+      box-shadow: var(--shadow, 0 10px 30px rgba(0,0,0,.08));
+    }
+    .stickyInner input{ border-radius:999px; padding: 10px 12px; }
+    .stickyInner button{
+      border-radius:999px; padding: 10px 12px; font-weight:900;
+      border:1px solid var(--border);
+      background: var(--btn);
+      color: var(--btnText);
+      cursor:pointer;
+      white-space:nowrap;
+    }
+
+    /* Popup */
+    .modalOverlay{
+      position:fixed; inset:0; background: rgba(0,0,0,.52);
+      display:none;
+      z-index: 100;
+      padding: 18px 14px;
+    }
+    .modal{
+      max-width: 460px;
+      margin: 0 auto;
+      border-radius: 22px;
+      border:1px solid var(--border);
+      background:#fff;
+      overflow:hidden;
+    }
+    .modalHead{ padding: 14px; border-bottom:1px solid var(--border); }
+    .modalTitle{ font-weight:1000; font-size:16px; }
+    .modalSub{ color:var(--muted); font-size:13px; margin-top:6px; line-height:1.35; }
+    .modalBody{ padding: 14px; }
+    .modalActions{ padding: 0 14px 14px; display:flex; gap:10px; }
+    .closeX{
+      float:right; border:1px solid var(--border);
+      border-radius:999px; width:34px; height:34px;
+      display:grid; place-items:center; cursor:pointer;
+      background:#fff; font-weight:1000;
+    }
+
+    footer{ text-align:center; color:var(--muted); font-size:12px; padding: 18px 8px 0; }
+  </style>
+</head>
+
+<body>
+  <!-- GTM noscript (recommended) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WTZLWJSR"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <main class="wrap" id="top">
+    <!-- Header card -->
+    <section class="card">
+      <div class="header">
+        <div class="avatar"><img id="avatarImg" alt="avatar" /></div>
+        <div class="nameBlock">
+          <div class="username" id="usernameText"></div>
+          <div class="bio" id="bioText"></div>
+        </div>
+      </div>
+      <div class="ctaRow">
+        <button class="btn" id="freeCtaBtn">Gratis</button>
+        <a class="btn alt" id="primaryLinkBtn" href="#" rel="noopener" target="_blank">Open</a>
+      </div>
+      <div class="centerHint" id="fallbackHint" style="display:none;">
+        Link list kosong, jadi social dijadiin link list. Minimalis tapi tetep jalan.
+      </div>
+    </section>
+
+    <!-- Socials -->
+    <section class="section card" id="socialSection">
+      <div class="sectionTitle">Social</div>
+      <div class="socialRow" id="socialRow"></div>
+    </section>
+
+    <!-- 7) Any Question dropdown -->
+    <section class="section" id="anyQSection"></section>
+
+    <!-- 9) Search (posisi sebelum link list) -->
+    <section class="section card" id="searchCard">
+      <div class="sectionTitle" id="searchTitle">Cari disini</div>
+      <div class="searchBlock">
+        <input id="searchInput" type="search" placeholder="Cari produk..." autocomplete="off" />
+        <button class="btn topBtn" id="backTopBtn" type="button">Kembali ke atas</button>
+      </div>
+    </section>
+
+    <!-- 8) Link list -->
+    <section class="section card" id="linkListSection">
+      <div class="sectionTitle">Links</div>
+      <div class="linkList" id="linkList"></div>
+    </section>
+
+    <!-- 10) Products -->
+    <section class="section card" id="productSection">
+      <div class="sectionTitle">Products</div>
+      <div class="filters" id="catFilters"></div>
+      <div class="products" id="products"></div>
+    </section>
+
+    <footer id="footerText"></footer>
+  </main>
+
+  <!-- Sticky nav bottom -->
+  <div class="stickyNav" id="stickyNav">
+    <div class="stickyInner">
+      <input id="stickySearch" type="search" placeholder="Cari produk..." autocomplete="off" />
+      <button id="stickyTopBtn" type="button">Kembali ke atas</button>
+    </div>
+  </div>
+
+  <!-- Popup modal -->
+  <div class="modalOverlay" id="modalOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Free biolink popup">
+      <div class="modalHead">
+        <div class="closeX" id="modalCloseBtn" title="Close">×</div>
+        <div class="modalTitle" id="popupTitle"></div>
+        <div class="modalSub" id="popupSub"></div>
+      </div>
+      <div class="modalBody">
+        <div id="popupFormWrap">
+          <div class="grid">
+            <div class="field">
+              <div class="label">Nama</div>
+              <input id="popName" type="text" placeholder="Nama kamu" />
+            </div>
+            <div class="field">
+              <div class="label">Email (wajib valid)</div>
+              <input id="popEmail" type="email" placeholder="email@domain.com" />
+            </div>
+            <div class="field">
+              <div class="label">WhatsApp (wajib valid)</div>
+              <input id="popWa" type="tel" placeholder="+62..." />
+            </div>
+            <div id="popErr" class="error" style="display:none;"></div>
+            <div id="popOk" class="ok" style="display:none;"></div>
+          </div>
+        </div>
+        <div id="popupThanks" style="display:none;">
+          <div style="font-weight:1000; font-size:14px; line-height:1.35;" id="thanksText"></div>
+        </div>
+      </div>
+      <div class="modalActions">
+        <button class="btn alt" id="modalCancelBtn" type="button">Tutup</button>
+        <button class="btn" id="modalSubmitBtn" type="button">Gratis</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Optional reCAPTCHA (only if enabled + has site key) -->
+  <script>
+    if (window.BIOLINK_CONFIG.ANY_QUESTION.enableRecaptcha && window.BIOLINK_CONFIG.ANY_QUESTION.recaptchaSiteKey) {
+      var s=document.createElement('script');
+      s.src="https://www.google.com/recaptcha/api.js";
+      s.async=true; s.defer=true;
+      document.head.appendChild(s);
+    }
+  </script>
+
+  <script>
+  /* =========================================================
+     ===================== DATA LAYER CORE =====================
+     ========================================================= */
+  window.dataLayer = window.dataLayer || [];
+  const dlPush = (event, payload={}) => {
+    window.dataLayer.push({
+      event,
+      page_type: "biolink",
+      username: (window.BIOLINK_CONFIG?.PROFILE?.username || ""),
+      ...payload
+    });
+  };
+
+  /* =========================================================
+     ===================== HELPERS / VALIDATION =================
+     ========================================================= */
+  const $ = (sel) => document.querySelector(sel);
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(String(email||"").trim());
+  const normalizeWA = (wa) => String(wa||"").trim().replace(/[^\d+]/g,'');
+  const isValidWA = (wa) => {
+    const n = normalizeWA(wa).replace(/^\+/, '');
+    return /^\d{9,15}$/.test(n);
+  };
+
+  const buildGFormUrl = () => `https://docs.google.com/forms/d/e/${window.BIOLINK_CONFIG.GFORM.formId}/formResponse`;
+
+  const postToGForm = async ({name, email, whatsapp, question=""}) => {
+    const cfg = window.BIOLINK_CONFIG.GFORM;
+    const fd = new FormData();
+    fd.append(cfg.entryName, name);
+    fd.append(cfg.entryEmail, email);
+    fd.append(cfg.entryWhatsapp, whatsapp);
+    if (question && cfg.entryQuestion) fd.append(cfg.entryQuestion, question);
+
+    // NOTE: no-cors => "blind submit" (you won't get success status reliably).
+    await fetch(buildGFormUrl(), { method:"POST", mode:"no-cors", body: fd });
+  };
+
+  /* =========================================================
+     ======================= RENDERING ==========================
+     ========================================================= */
+  const initTheme = () => {
+    const t = window.BIOLINK_CONFIG.THEME;
+    document.documentElement.style.setProperty("--bg", t.bg);
+    document.documentElement.style.setProperty("--text", t.text);
+    document.documentElement.style.setProperty("--muted", t.muted);
+    document.documentElement.style.setProperty("--border", t.border);
+    document.documentElement.style.setProperty("--card", t.card);
+    document.documentElement.style.setProperty("--btn", t.buttonBg);
+    document.documentElement.style.setProperty("--btnText", t.buttonText);
+    document.documentElement.style.setProperty("--btnAlt", t.buttonBgAlt);
+    document.documentElement.style.setProperty("--btnAltText", t.buttonTextAlt);
+    document.documentElement.style.setProperty("--shadow", t.shadow);
+  };
+
+  const renderProfile = () => {
+    const p = window.BIOLINK_CONFIG.PROFILE;
+    $("#avatarImg").src = p.avatarUrl;
+    $("#usernameText").textContent = p.username;
+    $("#bioText").textContent = p.bio;
+  };
+
+  const getActiveSocials = () => (window.BIOLINK_CONFIG.SOCIALS || []).filter(x=>!!x.active);
+
+  const getActiveLinkList = () => (window.BIOLINK_CONFIG.LINKLIST || []).filter(x=>!!x.active);
+
+  const renderSocials = () => {
+    const row = $("#socialRow");
+    row.innerHTML = "";
+    const socials = getActiveSocials();
+    socials.forEach(s => {
+      const btn = document.createElement("a");
+      btn.className = "socialBtn";
+      btn.href = s.url;
+      btn.target = "_blank";
+      btn.rel = "noopener";
+      btn.setAttribute("aria-label", s.label);
+      btn.innerHTML = `<img class="iconBW" src="${esc(s.icon)}" alt="${esc(s.label)}">`;
+      btn.addEventListener("click", () => {
+        dlPush("social_click", { social_platform: s.platform, label: s.label, url: s.url });
+      });
+      row.appendChild(btn);
+    });
+
+    // "Open" button points to first social by default
+    const primary = socials[0]?.url || "https://guenk.xyz";
+    $("#primaryLinkBtn").href = primary;
+  };
+
+  const fallbackLinkListFromSocials = () => {
+    const socials = getActiveSocials();
+    return socials.map(s => ({
+      active: true,
+      title: s.label,
+      url: s.url,
+      icon: s.icon
+    }));
+  };
+
+  const renderLinkList = () => {
+    const listEl = $("#linkList");
+    listEl.innerHTML = "";
+    const linkListActive = getActiveLinkList();
+    const hasLinks = linkListActive.length > 0;
+
+    // Logic requirement:
+    // If link list empty / false all => socials become link list AND hide social icons on top
+    let finalLinks = linkListActive;
+    if (!hasLinks) {
+      finalLinks = fallbackLinkListFromSocials();
+      $("#socialSection").style.display = "none";
+      $("#fallbackHint").style.display = "block";
+      dlPush("linklist_fallback_used", { reason: "linklist_empty_or_all_false" });
+    } else {
+      $("#socialSection").style.display = "";
+      $("#fallbackHint").style.display = "none";
+    }
+
+    finalLinks.forEach(item => {
+      const a = document.createElement("a");
+      a.className = "linkItem";
+      a.href = item.url;
+      a.target = "_blank";
+      a.rel = "noopener";
+
+      const iconUrl = item.icon || window.BIOLINK_CONFIG.LINKLIST_FALLBACK_ICON;
+      a.innerHTML = `
+        <img class="liIcon iconBW" src="${esc(iconUrl)}" alt="">
+        <span>${esc(item.title)}</span>
+      `;
+
+      a.addEventListener("click", () => {
+        dlPush("link_click", { link_title: item.title, url: item.url, source: hasLinks ? "linklist" : "social_fallback" });
+      });
+
+      listEl.appendChild(a);
+    });
+  };
+
+  const renderAnyQuestion = () => {
+    const cfg = window.BIOLINK_CONFIG.ANY_QUESTION;
+    const wrap = $("#anyQSection");
+    wrap.innerHTML = "";
+    if (!cfg.enabled) return;
+
+    const box = document.createElement("details");
+    box.className = "anyQ card";
+    box.innerHTML = `
+      <summary>
+        <span>${esc(cfg.title)}</span>
+        <span style="color:var(--muted); font-weight:900;">+</span>
+      </summary>
+      <div class="anyBody">
+        <div class="grid">
+          <div class="field">
+            <div class="label">Nama</div>
+            <input id="qName" type="text" placeholder="Nama kamu" />
+          </div>
+          <div class="field">
+            <div class="label">Email (wajib valid)</div>
+            <input id="qEmail" type="email" placeholder="email@domain.com" />
+          </div>
+          <div class="field">
+            <div class="label">WhatsApp (wajib valid)</div>
+            <input id="qWa" type="tel" placeholder="+62..." />
+          </div>
+          <div class="field">
+            <div class="label">Question</div>
+            <textarea id="qText" placeholder="Tulis pertanyaan..."></textarea>
+          </div>
+
+          <div id="antiBotWrap"></div>
+
+          <div id="qErr" class="error" style="display:none;"></div>
+          <div id="qOk" class="ok" style="display:none;"></div>
+
+          <button class="btn" id="qSendBtn" type="button" style="background:${esc(cfg.colorButtonBg)};color:${esc(cfg.colorButtonText)};">
+            ${esc(cfg.ctaText)}
+          </button>
+        </div>
+      </div>
+    `;
+    wrap.appendChild(box);
+
+    box.addEventListener("toggle", () => {
+      if (box.open) dlPush("form_open", { form_name: "any_question" });
+    });
+
+    // Anti-bot
+    const antiWrap = $("#antiBotWrap");
+    if (cfg.enableRecaptcha && cfg.recaptchaSiteKey) {
+      antiWrap.innerHTML = `<div class="g-recaptcha" data-sitekey="${esc(cfg.recaptchaSiteKey)}"></div>
+        <div style="font-size:12px;color:var(--muted);margin-top:6px;">
+          reCAPTCHA aktif (kalau key bener). Kalau kosong, ya... itu dekorasi.
+        </div>`;
+    } else {
+      // Lightweight checkbox + math challenge
+      const a = Math.floor(Math.random()*8)+2;
+      const b = Math.floor(Math.random()*8)+2;
+      antiWrap.innerHTML = `
+        <div class="field">
+          <label style="display:flex;gap:10px;align-items:center;font-weight:800;">
+            <input id="botCheck" type="checkbox" />
+            <span>I'm not a robot (versi hemat)</span>
+          </label>
+          <div class="label">Anti-bot check: ${a} + ${b} = ?</div>
+          <input id="botAns" type="number" inputmode="numeric" placeholder="Jawaban" />
+        </div>
+      `;
+      antiWrap.dataset.expected = String(a+b);
+    }
+
+    $("#qSendBtn").addEventListener("click", async () => {
+      const name = String($("#qName").value||"").trim();
+      const email = String($("#qEmail").value||"").trim();
+      const wa = String($("#qWa").value||"").trim();
+      const question = String($("#qText").value||"").trim();
+
+      $("#qErr").style.display = "none";
+      $("#qOk").style.display = "none";
+
+      // required: email & whatsapp
+      if (!name) return showErr("#qErr","Nama wajib diisi.");
+      if (!isValidEmail(email)) return showErr("#qErr","Email gak valid. Jangan asal ngetik, men.");
+      if (!isValidWA(wa)) return showErr("#qErr","WhatsApp gak valid. Pakai format nomor bener (contoh: +628xxx).");
+      if (!question) return showErr("#qErr","Question belum diisi.");
+
+      // anti-bot validation
+      if (cfg.enableRecaptcha && cfg.recaptchaSiteKey) {
+        const token = (window.grecaptcha && window.grecaptcha.getResponse) ? window.grecaptcha.getResponse() : "";
+        if (!token) return showErr("#qErr","Verifikasi reCAPTCHA dulu.");
+      } else {
+        const checked = $("#botCheck").checked;
+        const ans = String($("#botAns").value||"").trim();
+        if (!checked) return showErr("#qErr","Centang anti-bot dulu.");
+        if (ans !== antiWrap.dataset.expected) return showErr("#qErr","Jawaban anti-bot salah. Robot detected (katanya).");
+      }
+
+      dlPush("form_submit_attempt", { form_name: "any_question" });
+
+      try{
+        await postToGForm({ name, email, whatsapp: normalizeWA(wa), question });
+        dlPush("form_submit", { form_name: "any_question" });
+        $("#qOk").textContent = "Terkirim. Kalau gak masuk, itu urusan Google Form (blind submit no-cors).";
+        $("#qOk").style.display = "block";
+      }catch(e){
+        dlPush("form_submit_error", { form_name: "any_question", error: String(e) });
+        showErr("#qErr","Gagal submit. Cek koneksi, atau Google Form-nya ngamuk.");
+      }
+    });
+  };
+
+  const showErr = (sel, msg) => {
+    const el = $(sel);
+    el.textContent = msg;
+    el.style.display = "block";
+  };
+
+  const renderProducts = () => {
+    const productsEl = $("#products");
+    const catsEl = $("#catFilters");
+    const cfg = window.BIOLINK_CONFIG;
+
+    // categories
+    catsEl.innerHTML = "";
+    let activeCat = "all";
+    (cfg.CATEGORIES||[]).forEach(c => {
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "chip" + (c.id==="all" ? " active":"");
+      chip.textContent = c.label;
+      chip.addEventListener("click", () => {
+        activeCat = c.id;
+        [...catsEl.querySelectorAll(".chip")].forEach(x=>x.classList.remove("active"));
+        chip.classList.add("active");
+        dlPush("category_select", { category_id: c.id, category_label: c.label });
+        draw();
+      });
+      catsEl.appendChild(chip);
+    });
+
+    const draw = () => {
+      const q = String($("#searchInput").value||"").trim().toLowerCase();
+      productsEl.innerHTML = "";
+      const items = (cfg.PRODUCTS||[]).filter(p=>!!p.active);
+
+      const filtered = items.filter(p => {
+        const matchCat = (activeCat==="all") ? true : (p.category===activeCat);
+        const matchQ = !q ? true : (String(p.title).toLowerCase().includes(q) || String(p.price).toLowerCase().includes(q));
+        return matchCat && matchQ;
+      });
+
+      filtered.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "product";
+        card.innerHTML = `
+          <div class="pImg"><img src="${esc(p.image)}" alt="${esc(p.title)}"></div>
+          <div class="pBody">
+            <div class="pTitle">${esc(p.title)}</div>
+            <div class="pMeta">
+              <div class="pPrice">${esc(p.price)}</div>
+              <a class="pBuy" href="${esc(p.url)}" target="_blank" rel="noopener">${esc(cfg.buyText || "Buy")}</a>
+            </div>
+          </div>
+        `;
+        const buy = card.querySelector(".pBuy");
+        buy.addEventListener("click", () => {
+          dlPush("product_click", { product_title: p.title, price: p.price, url: p.url, category: p.category || "" });
+        });
+        productsEl.appendChild(card);
+      });
+
+      dlPush("products_render", { shown: filtered.length, total: items.length, category: activeCat, query: q });
+    };
+
+    // bind search
+    $("#searchInput").addEventListener("input", () => {
+      dlPush("product_search", { query: String($("#searchInput").value||"") });
+      draw();
+    });
+
+    draw();
+  };
+
+  const setupSearchNav = () => {
+    const cfg = window.BIOLINK_CONFIG.SEARCH_NAV;
+    $("#searchTitle").textContent = cfg.title;
+    $("#backTopBtn").textContent = cfg.backToTopText;
+    $("#stickyTopBtn").textContent = cfg.backToTopText;
+
+    const sticky = $("#stickyNav");
+    const syncSearch = (value) => {
+      $("#searchInput").value = value;
+      $("#searchInput").dispatchEvent(new Event("input"));
+    };
+
+    $("#stickySearch").addEventListener("input", (e) => {
+      syncSearch(e.target.value);
+    });
+    $("#searchInput").addEventListener("input", (e) => {
+      $("#stickySearch").value = e.target.value;
+    });
+
+    const toTop = () => {
+      dlPush("back_to_top_click");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+    $("#backTopBtn").addEventListener("click", toTop);
+    $("#stickyTopBtn").addEventListener("click", toTop);
+
+    window.addEventListener("scroll", () => {
+      const show = window.scrollY > cfg.stickyShowAfterPx;
+      sticky.style.display = show ? "block" : "none";
+    }, { passive:true });
+  };
+
+  const setupPopup = () => {
+    const cfg = window.BIOLINK_CONFIG.POPUP;
+    if (!cfg.enabled) return;
+
+    // Button style override (popup CTA color)
+    $("#freeCtaBtn").style.background = cfg.accentButtonBg;
+    $("#freeCtaBtn").style.color = cfg.accentButtonText;
+    $("#modalSubmitBtn").style.background = cfg.accentButtonBg;
+    $("#modalSubmitBtn").style.color = cfg.accentButtonText;
+
+    $("#popupTitle").textContent = cfg.title;
+    $("#popupSub").textContent = cfg.subtitle;
+    $("#thanksText").textContent = cfg.thanksText;
+
+    const overlay = $("#modalOverlay");
+    const close = () => {
+      overlay.style.display = "none";
+      overlay.setAttribute("aria-hidden","true");
+      dlPush("popup_close", { popup_name: "free_biolink" });
+    };
+    const open = () => {
+      $("#popupThanks").style.display = "none";
+      $("#popupFormWrap").style.display = "block";
+      $("#popErr").style.display = "none";
+      $("#popOk").style.display = "none";
+      overlay.style.display = "block";
+      overlay.setAttribute("aria-hidden","false");
+      dlPush("popup_open", { popup_name: "free_biolink" });
+    };
+
+    $("#freeCtaBtn").textContent = cfg.ctaButtonText;
+    $("#freeCtaBtn").addEventListener("click", () => {
+      dlPush("cta_click", { cta: "free_popup_open" });
+      open();
+    });
+
+    $("#modalCloseBtn").addEventListener("click", close);
+    $("#modalCancelBtn").addEventListener("click", close);
+    overlay.addEventListener("click", (e)=>{ if(e.target===overlay) close(); });
+
+    $("#modalSubmitBtn").addEventListener("click", async () => {
+      const name = String($("#popName").value||"").trim();
+      const email = String($("#popEmail").value||"").trim();
+      const wa = String($("#popWa").value||"").trim();
+
+      $("#popErr").style.display = "none";
+      $("#popOk").style.display = "none";
+
+      if (!name) return showErr("#popErr","Nama wajib diisi.");
+      if (!isValidEmail(email)) return showErr("#popErr","Email gak valid.");
+      if (!isValidWA(wa)) return showErr("#popErr","WhatsApp gak valid. Contoh: +628xxx.");
+
+      dlPush("form_submit_attempt", { form_name: "popup_free" });
+
+      try{
+        await postToGForm({ name, email, whatsapp: normalizeWA(wa), question: "" });
+        dlPush("form_submit", { form_name: "popup_free" });
+
+        $("#popupFormWrap").style.display = "none";
+        $("#popupThanks").style.display = "block";
+
+        // mark as seen
+        try{ localStorage.setItem("biolink_free_popup_seen","1"); }catch(_){}
+      }catch(e){
+        dlPush("form_submit_error", { form_name: "popup_free", error: String(e) });
+        showErr("#popErr","Gagal submit. Cek koneksi atau setting entry Google Form lo.");
+      }
+    });
+
+    // auto show on first visit
+    if (cfg.showOnFirstVisit) {
+      let seen = false;
+      try{ seen = localStorage.getItem("biolink_free_popup_seen")==="1"; }catch(_){}
+      if (!seen) {
+        setTimeout(() => open(), cfg.firstVisitDelayMs || 900);
+      }
+    }
+  };
+
+  const initFooter = () => {
+    $("#footerText").textContent = window.BIOLINK_CONFIG.FOOTER_TEXT;
+  };
+
+  const boot = () => {
+    initTheme();
+    renderProfile();
+    renderSocials();
+    renderLinkList();
+    renderAnyQuestion();
+    setupSearchNav();
+    renderProducts();
+    setupPopup();
+    initFooter();
+
+    // page view
+    dlPush("page_view", { path: location.pathname, title: document.title });
+  };
+
+  boot();
+  </script>
+</body>
+</html>
